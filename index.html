@@ -1,394 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neovim Mastery — Interactive Practice Platform</title>
-    <meta name="description"
-        content="Master Neovim with 50 progressive challenges, interactive flashcards, and live coding practice. Learn motions, plugins, LSP, and advanced techniques.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/lib/codemirror.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/dialog/dialog.css">
+    <title>Neovim Mastery</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
-
-<body>
-    <!-- Skip to content link for accessibility -->
-    <a href="#main-content" class="skip-link">Skip to content</a>
-
-    <!-- Header -->
-    <header class="header" role="banner">
-        <div class="container">
-            <div class="header-content">
-                <div class="header-brand">
-                    <h1 class="brand-title">
-                        <span class="brand-icon">⚡</span>
-                        Neovim Mastery
-                    </h1>
-                    <span class="brand-subtitle">Interactive Practice Platform</span>
-                </div>
-                <nav class="header-nav" role="navigation" aria-label="Main navigation">
-                    <button class="nav-button" id="challenges-tab" data-tab="challenges" aria-pressed="true">
-                        <span class="nav-icon">🎯</span>
-                        Challenges
-                    </button>
-                    <button class="nav-button" id="practice-tab" data-tab="practice" aria-pressed="false">
-                        <span class="nav-icon">⌨️</span>
-                        Practice
-                    </button>
-                    <button class="nav-button" id="flashcards-tab" data-tab="flashcards" aria-pressed="false">
-                        <span class="nav-icon">📚</span>
-                        Flashcards
-                    </button>
-                </nav>
-            </div>
-        </div>
+<body x-data="neovimMastery()">
+    <header>
+        <h1>Neovim Mastery</h1>
     </header>
-
-    <!-- Main Content -->
-    <main id="main-content" class="main" role="main">
-        <div class="container">
-
-            <!-- Challenges Section -->
-            <section class="section" id="challenges-section" aria-labelledby="challenges-heading">
-                <div class="section-layout">
-                    <!-- Sidebar -->
-                    <aside class="sidebar" role="complementary" aria-label="Challenge filters">
-                        <div class="sidebar-content">
-                            <div class="search-section">
-                                <label for="search-input" class="visually-hidden">Search challenges</label>
-                                <input type="text" id="search-input" class="search-input"
-                                    placeholder="Search challenges (Press / to focus)" autocomplete="off"
-                                    spellcheck="false">
-                                <div class="search-hint">
-                                    Press <kbd>/</kbd> to focus, <kbd>Esc</kbd> to clear
-                                </div>
-                            </div>
-
-                            <div class="filter-section">
-                                <h3 class="filter-title">Difficulty</h3>
-                                <div class="filter-group" role="group" aria-labelledby="difficulty-filter">
-                                    <button class="chip active" data-filter="difficulty" data-value="all"
-                                        aria-pressed="true">
-                                        All <span class="chip-count" id="count-all">50</span>
-                                    </button>
-                                    <button class="chip" data-filter="difficulty" data-value="Beginner"
-                                        aria-pressed="false">
-                                        Beginner <span class="chip-count" id="count-beginner">0</span>
-                                    </button>
-                                    <button class="chip" data-filter="difficulty" data-value="Intermediate"
-                                        aria-pressed="false">
-                                        Intermediate <span class="chip-count" id="count-intermediate">0</span>
-                                    </button>
-                                    <button class="chip" data-filter="difficulty" data-value="Advanced"
-                                        aria-pressed="false">
-                                        Advanced <span class="chip-count" id="count-advanced">0</span>
-                                    </button>
-                                    <button class="chip" data-filter="difficulty" data-value="Expert"
-                                        aria-pressed="false">
-                                        Expert <span class="chip-count" id="count-expert">0</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="filter-section">
-                                <h3 class="filter-title">Tags</h3>
-                                <div class="filter-group tag-filters" role="group" aria-labelledby="tags-filter"
-                                    id="tag-filters">
-                                    <!-- Tags will be populated dynamically -->
-                                </div>
-                            </div>
-
-                            <div class="stats-section">
-                                <h3 class="stats-title">Progress</h3>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 0%"></div>
-                                </div>
-                                <div class="stats-text">
-                                    <span id="completed-count">0</span> of <span id="total-count">50</span> completed
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-
-                    <!-- Challenge Grid -->
-                    <div class="content">
-                        <div class="content-header">
-                            <h2 id="challenges-heading" class="section-title">Neovim Challenges</h2>
-                            <div class="content-actions">
-                                <button class="button ghost" id="reset-progress" type="button">
-                                    Reset Progress
-                                </button>
-                                <button class="button primary" id="export-progress" type="button">
-                                    Export Progress
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="challenge-grid" id="challenge-grid" role="grid"
-                            aria-labelledby="challenges-heading">
-                            <!-- Challenges will be populated dynamically -->
-                        </div>
-
-                        <div class="grid-footer">
-                            <div class="results-count" id="results-count" aria-live="polite">
-                                Showing 50 challenges
-                            </div>
-                        </div>
-                    </div>
+    <main>
+        <template x-for="course in courses" :key="course.title">
+            <section class="course">
+                <h2 x-text="course.title" @click="toggle(course)"></h2>
+                <div x-show="course.open">
+                    <p x-text="course.description"></p>
+                    <ul>
+                        <template x-for="video in course.videos" :key="video.title">
+                            <li>
+                                <a :href="video.url" target="_blank" x-text="video.title"></a>
+                            </li>
+                        </template>
+                    </ul>
                 </div>
             </section>
-
-            <!-- Interactive Practice Section -->
-            <section class="section hidden" id="practice-section" aria-labelledby="practice-heading">
-                <div class="practice-layout">
-                    <!-- Practice Sidebar -->
-                    <aside class="practice-sidebar">
-                        <div class="practice-controls">
-                            <h2 id="practice-heading" class="section-title">Interactive Practice</h2>
-
-                            <div class="exercise-selector">
-                                <label for="exercise-select" class="form-label">Choose Exercise:</label>
-                                <select id="exercise-select" class="exercise-select">
-                                    <option value="">Select a practice exercise...</option>
-                                    <!-- Options will be populated dynamically -->
-                                </select>
-                            </div>
-
-                            <div class="exercise-info" id="exercise-info">
-                                <div class="exercise-description" id="exercise-description">
-                                    <!-- Exercise description will appear here -->
-                                </div>
-
-                                <div class="exercise-goals" id="exercise-goals">
-                                    <!-- Goals will appear here -->
-                                </div>
-                            </div>
-
-                            <div class="practice-actions">
-                                <button class="button primary" id="start-exercise" type="button" disabled>
-                                    Start Exercise
-                                </button>
-                                <button class="button ghost" id="reset-exercise" type="button" disabled>
-                                    Reset
-                                </button>
-                                <button class="button success hidden" id="submit-exercise" type="button">
-                                    Submit Solution
-                                </button>
-                            </div>
-
-                            <div class="practice-stats">
-                                <div class="stat-item">
-                                    <span class="stat-label">Exercises Completed</span>
-                                    <span class="stat-value" id="exercises-completed">0</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Success Rate</span>
-                                    <span class="stat-value" id="success-rate">0%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-
-                    <!-- Editor Area -->
-                    <div class="editor-area">
-                        <div class="editor-header">
-                            <div class="editor-tabs">
-                                <div class="editor-tab active">
-                                    <span class="tab-icon">📝</span>
-                                    practice.txt
-                                </div>
-                            </div>
-                            <div class="editor-status">
-                                <span class="vim-mode" id="vim-mode">NORMAL</span>
-                                <span class="cursor-position" id="cursor-position">1:1</span>
-                            </div>
-                        </div>
-
-                        <div class="editor-container">
-                            <textarea id="code-editor"
-                                placeholder="Select an exercise to start practicing..."></textarea>
-                        </div>
-
-                        <div class="editor-footer">
-                            <div class="command-line" id="command-line">
-                                <span class="command-prompt">:</span>
-                                <span class="command-text" id="command-text"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Flashcards Section -->
-            <section class="section hidden" id="flashcards-section" aria-labelledby="flashcards-heading">
-                <div class="flashcard-container">
-                    <div class="flashcard-header">
-                        <h2 id="flashcards-heading" class="section-title">Neovim Flashcards</h2>
-                        <div class="flashcard-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="flashcard-progress" style="width: 0%"></div>
-                            </div>
-                            <div class="progress-text">
-                                <span id="current-card">1</span> of <span id="total-cards">20</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flashcard-main">
-                        <div class="flashcard" id="flashcard">
-                            <div class="flashcard-question" id="flashcard-question">
-                                <!-- Question will be populated dynamically -->
-                            </div>
-
-                            <div class="flashcard-choices hidden" id="flashcard-choices">
-                                <!-- Choices will be populated dynamically -->
-                            </div>
-
-                            <div class="flashcard-answer hidden" id="flashcard-answer">
-                                <!-- Answer will be shown here -->
-                            </div>
-
-                            <div class="flashcard-hint hidden" id="flashcard-hint">
-                                <!-- Hint will be shown here -->
-                            </div>
-                        </div>
-
-                        <div class="flashcard-controls">
-                            <button class="button ghost" id="show-hint" type="button">
-                                Show Hint
-                            </button>
-                            <button class="button ghost" id="reveal-answer" type="button">
-                                Reveal Answer <kbd>Space</kbd>
-                            </button>
-                            <div class="flashcard-navigation">
-                                <button class="button ghost" id="prev-card" type="button" disabled>
-                                    ← Previous <kbd>←</kbd>
-                                </button>
-                                <button class="button primary" id="next-card" type="button">
-                                    Next → <kbd>→</kbd>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flashcard-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">Correct</span>
-                            <span class="stat-value" id="correct-count">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Incorrect</span>
-                            <span class="stat-value" id="incorrect-count">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Accuracy</span>
-                            <span class="stat-value" id="accuracy">0%</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+        </template>
     </main>
-
-    <!-- Challenge Detail Modal -->
-    <div class="modal-overlay hidden" id="challenge-modal" role="dialog" aria-labelledby="modal-title"
-        aria-hidden="true">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modal-title" class="modal-title"></h3>
-                <button class="modal-close" id="modal-close" type="button" aria-label="Close modal">
-                    ×
-                </button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Modal content will be populated dynamically -->
-            </div>
-
-            <!-- Integrated Editor Section -->
-            <div class="modal-editor-section" id="modal-editor-section" style="display: none;">
-                <div class="editor-header">
-                    <h4 class="editor-title">Practice Editor</h4>
-                    <div class="editor-controls">
-                        <select id="editor-vim-mode" class="editor-select">
-                            <option value="normal">Normal Mode</option>
-                            <option value="insert">Insert Mode</option>
-                            <option value="visual">Visual Mode</option>
-                        </select>
-                        <button class="button ghost small" id="reset-editor" type="button">
-                            Reset
-                        </button>
-                        <button class="button secondary small" id="check-progress" type="button">
-                            Check Progress
-                        </button>
-                    </div>
-                </div>
-                <div class="editor-container">
-                    <textarea id="challenge-editor" placeholder="Start practicing Neovim commands here..."></textarea>
-                </div>
-                <div class="editor-status">
-                    <div class="status-left">
-                        <span class="mode-indicator" id="mode-indicator">NORMAL</span>
-                        <span class="position-indicator" id="position-indicator">1:1</span>
-                    </div>
-                    <div class="status-right">
-                        <span class="progress-indicator" id="progress-indicator">Ready to practice</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <div class="modal-actions">
-                    <button class="button ghost" id="modal-cancel" type="button">
-                        Close
-                    </button>
-                    <button class="button secondary" id="practice-challenge" type="button">
-                        Start Practice
-                    </button>
-                    <button class="button primary" id="toggle-completion" type="button">
-                        Mark Complete
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success/Feedback Modal -->
-    <div class="modal-overlay hidden" id="feedback-modal" role="dialog" aria-labelledby="feedback-title"
-        aria-hidden="true">
-        <div class="modal feedback-modal">
-            <div class="feedback-content" id="feedback-content">
-                <!-- Feedback content will be populated dynamically -->
-            </div>
-            <div class="modal-footer">
-                <button class="button primary" id="feedback-close" type="button">
-                    Continue
-                </button>
-                <button class="button ghost" id="try-another" type="button">
-                    Try Another Exercise
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/lib/codemirror.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/keymap/vim.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/mode/javascript/javascript.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/mode/python/python.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/mode/markdown/markdown.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/mode/css/css.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/mode/xml/xml.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/mode/markdown/markdown.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/dialog/dialog.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/search/searchcursor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/search/search.js"></script>
-    <script src="script.js"></script>
+    <script>
+        function neovimMastery() {
+            return {
+                courses: [],
+                open: false,
+                toggle(course) {
+                    course.open = !course.open;
+                },
+                init() {
+                    fetch('neovim-mastery.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.courses = data.courses.map(course => ({...course, open: false}));
+                        });
+                }
+            }
+        }
+    </script>
 </body>
-
 </html>
