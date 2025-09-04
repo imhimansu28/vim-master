@@ -1679,9 +1679,109 @@ body {
 
 /* Modal size adjustment for editor */
 .modal-overlay.editor-active .modal {
-    max-width: 1200px;
+    max-width: 1400px;
     width: 95%;
     max-height: 95vh;
+}
+
+/* Two-column layout for editor mode */
+.modal.editor-mode {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal.editor-mode .modal-body {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding: 0;
+    min-height: 0;
+    flex: 1;
+}
+
+.modal-content-left {
+    flex: 0 0 400px;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 2px solid var(--color-divider);
+    background: var(--color-surface-alt);
+    min-height: 0;
+}
+
+.modal-content-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+}
+
+.modal.editor-mode .modal-editor-section {
+    margin: 0;
+    padding: 20px;
+    border-top: none;
+    background: var(--color-surface);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.modal.editor-mode .modal-editor-section .editor-container {
+    flex: 1;
+    min-height: 400px;
+}
+
+/* Responsive fallback for smaller screens */
+@media (max-width: 1200px) {
+    .modal.editor-mode .modal-body {
+        flex-direction: column;
+    }
+
+    .modal-content-left {
+        flex: none;
+        border-right: none;
+        border-bottom: 2px solid var(--color-divider);
+        max-height: 300px;
+    }
+
+    .modal-content-right {
+        flex: 1;
+        min-height: 400px;
+    }
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    .modal.editor-mode {
+        max-height: 95vh;
+    }
+
+    .modal.editor-mode .modal-body {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .modal-content-left {
+        flex: none;
+        max-height: 250px;
+        overflow-y: auto;
+        border-bottom: 1px solid var(--color-divider);
+        padding: 16px;
+    }
+
+    .modal-content-right {
+        flex: 1;
+        min-height: 350px;
+    }
+
+    .modal.editor-mode .modal-editor-section {
+        padding: 16px;
+    }
+
+    .modal.editor-mode .modal-editor-section .editor-container {
+        min-height: 300px;
+    }
 }
 
 /* Vim mode specific styles */

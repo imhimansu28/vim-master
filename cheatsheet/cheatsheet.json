@@ -1,0 +1,1424 @@
+{
+    "metadata": {
+        "title": "Neovim Cheatsheet — Personalized",
+        "description": "A comprehensive cheatsheet for Neovim configuration, keymaps, and plugins",
+        "author": "Himanshu",
+        "version": "2.0.0",
+        "updated_at": "2025-01-09",
+        "tags": [
+            "neovim",
+            "vim",
+            "editor",
+            "cheatsheet",
+            "keybindings"
+        ],
+        "leader": "<Space>",
+        "local_leader": "<Space>"
+    },
+    "categories": [
+        {
+            "id": "settings",
+            "name": "Settings",
+            "description": "Neovim configuration options and what they do",
+            "icon": "⚙️",
+            "color": "#3b82f6"
+        },
+        {
+            "id": "keymaps",
+            "name": "Keymaps",
+            "description": "Custom key bindings and shortcuts",
+            "icon": "⌨️",
+            "color": "#10b981"
+        },
+        {
+            "id": "plugins",
+            "name": "Plugins",
+            "description": "Plugin-specific commands and shortcuts",
+            "icon": "🔌",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "lsp",
+            "name": "LSP",
+            "description": "Language Server Protocol commands",
+            "icon": "🔍",
+            "color": "#8b5cf6"
+        },
+        {
+            "id": "git",
+            "name": "Git",
+            "description": "Git integration commands",
+            "icon": "📝",
+            "color": "#ef4444"
+        },
+        {
+            "id": "navigation",
+            "name": "Navigation",
+            "description": "Movement and navigation shortcuts",
+            "icon": "🧭",
+            "color": "#06b6d4"
+        },
+        {
+            "id": "editing",
+            "name": "Text Editing",
+            "description": "Essential Vim text editing commands",
+            "icon": "✏️",
+            "color": "#e11d48"
+        },
+        {
+            "id": "visual",
+            "name": "Visual & Selection",
+            "description": "Visual mode and text selection commands",
+            "icon": "🎯",
+            "color": "#7c3aed"
+        },
+        {
+            "id": "multiline",
+            "name": "Multiline Editing",
+            "description": "Multiline editing and block operations",
+            "icon": "📝",
+            "color": "#059669"
+        },
+        {
+            "id": "search-replace",
+            "name": "Search & Replace",
+            "description": "Search, replace, and pattern matching",
+            "icon": "🔍",
+            "color": "#dc2626"
+        }
+    ],
+    "items": [
+        {
+            "id": "leader-config",
+            "title": "Leader Keys",
+            "description": "Global and local leader key configuration",
+            "category": "settings",
+            "tags": [
+                "leader",
+                "configuration",
+                "mapping"
+            ],
+            "keywords": [
+                "mapleader",
+                "maplocalleader",
+                "space"
+            ],
+            "mode": "config",
+            "content": {
+                "settings": [
+                    {
+                        "setting": "mapleader",
+                        "value": "<Space>",
+                        "description": "Global leader for custom shortcuts"
+                    },
+                    {
+                        "setting": "maplocalleader",
+                        "value": "<Space>",
+                        "description": "Local leader (filetype-specific mappings)"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "line-numbers",
+            "title": "Line Numbers",
+            "description": "Configure absolute and relative line numbering",
+            "category": "settings",
+            "tags": [
+                "numbers",
+                "display",
+                "navigation"
+            ],
+            "keywords": [
+                "number",
+                "relativenumber",
+                "line"
+            ],
+            "mode": "config",
+            "content": {
+                "settings": [
+                    {
+                        "setting": "number",
+                        "value": "true",
+                        "description": "Show absolute line numbers"
+                    },
+                    {
+                        "setting": "relativenumber",
+                        "value": "true",
+                        "description": "Show relative numbers for quick jumps (e.g., 5j)"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "indentation",
+            "title": "Indentation Settings",
+            "description": "Configure tab size, spaces, and auto-indentation",
+            "category": "settings",
+            "tags": [
+                "indentation",
+                "tabs",
+                "spaces",
+                "formatting"
+            ],
+            "keywords": [
+                "tabstop",
+                "shiftwidth",
+                "expandtab",
+                "smartindent"
+            ],
+            "mode": "config",
+            "content": {
+                "settings": [
+                    {
+                        "setting": "tabstop",
+                        "value": "4",
+                        "description": "1 <Tab> renders as 4 spaces"
+                    },
+                    {
+                        "setting": "shiftwidth",
+                        "value": "4",
+                        "description": "Auto-indent / >> << use 4 spaces"
+                    },
+                    {
+                        "setting": "expandtab",
+                        "value": "true",
+                        "description": "Insert spaces instead of a tab character"
+                    },
+                    {
+                        "setting": "smartindent",
+                        "value": "true",
+                        "description": "Smart indent on new lines for code-like files"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "search-config",
+            "title": "Search Configuration",
+            "description": "Smart search settings and highlighting",
+            "category": "settings",
+            "tags": [
+                "search",
+                "highlight",
+                "case-sensitivity"
+            ],
+            "keywords": [
+                "ignorecase",
+                "smartcase",
+                "incsearch",
+                "hlsearch"
+            ],
+            "mode": "config",
+            "content": {
+                "settings": [
+                    {
+                        "setting": "ignorecase",
+                        "value": "true",
+                        "description": "Case-insensitive search by default"
+                    },
+                    {
+                        "setting": "smartcase",
+                        "value": "true",
+                        "description": "If query has uppercase, search becomes case-sensitive"
+                    },
+                    {
+                        "setting": "incsearch",
+                        "value": "true",
+                        "description": "Show matches while typing"
+                    },
+                    {
+                        "setting": "hlsearch",
+                        "value": "true",
+                        "description": "Highlight all matches"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "basic-keymaps",
+            "title": "Basic Navigation & Editing",
+            "description": "Essential keybindings for daily editing",
+            "category": "keymaps",
+            "tags": [
+                "navigation",
+                "editing",
+                "basic"
+            ],
+            "keywords": [
+                "jk",
+                "escape",
+                "leader",
+                "movement"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "jk",
+                        "mode": "Insert",
+                        "action": "Exit insert mode (fast escape)",
+                        "description": "Quick way to exit insert mode without reaching for ESC"
+                    },
+                    {
+                        "keys": "<leader>nh",
+                        "mode": "Normal",
+                        "action": "Clear search highlights",
+                        "description": "Remove search highlighting after finding what you need"
+                    },
+                    {
+                        "keys": "<S-l>",
+                        "mode": "Normal",
+                        "action": "Next buffer",
+                        "description": "Move to the next open buffer"
+                    },
+                    {
+                        "keys": "<S-h>",
+                        "mode": "Normal",
+                        "action": "Previous buffer",
+                        "description": "Move to the previous open buffer"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "window-management",
+            "title": "Window & Tab Management",
+            "description": "Split windows, tabs, and buffer management",
+            "category": "keymaps",
+            "tags": [
+                "windows",
+                "splits",
+                "tabs",
+                "buffers"
+            ],
+            "keywords": [
+                "split",
+                "tab",
+                "window",
+                "vertical",
+                "horizontal"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "<leader>sv",
+                        "mode": "Normal",
+                        "action": "Split window vertically",
+                        "description": "Create a vertical split"
+                    },
+                    {
+                        "keys": "<leader>sh",
+                        "mode": "Normal",
+                        "action": "Split window horizontally",
+                        "description": "Create a horizontal split"
+                    },
+                    {
+                        "keys": "<leader>se",
+                        "mode": "Normal",
+                        "action": "Make splits equal size",
+                        "description": "Equalize all split window sizes"
+                    },
+                    {
+                        "keys": "<leader>sx",
+                        "mode": "Normal",
+                        "action": "Close current split",
+                        "description": "Close the currently focused split"
+                    },
+                    {
+                        "keys": "<leader>to",
+                        "mode": "Normal",
+                        "action": "Open new tab",
+                        "description": "Create a new tab"
+                    },
+                    {
+                        "keys": "<leader>tx",
+                        "mode": "Normal",
+                        "action": "Close current tab",
+                        "description": "Close the current tab"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "telescope-commands",
+            "title": "Telescope Fuzzy Finder",
+            "description": "Fast file finding and searching with Telescope",
+            "category": "plugins",
+            "tags": [
+                "telescope",
+                "finder",
+                "search",
+                "files"
+            ],
+            "keywords": [
+                "telescope",
+                "find",
+                "grep",
+                "buffer",
+                "help"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "<leader>ff",
+                        "mode": "Normal",
+                        "action": "Telescope: find files",
+                        "description": "Find files in current project"
+                    },
+                    {
+                        "keys": "<leader>fg",
+                        "mode": "Normal",
+                        "action": "Telescope: live grep",
+                        "description": "Search text across all files"
+                    },
+                    {
+                        "keys": "<leader>fb",
+                        "mode": "Normal",
+                        "action": "Telescope: list buffers",
+                        "description": "Show and switch between open buffers"
+                    },
+                    {
+                        "keys": "<leader>fh",
+                        "mode": "Normal",
+                        "action": "Telescope: help tags",
+                        "description": "Search Neovim help documentation"
+                    },
+                    {
+                        "keys": "<leader>fr",
+                        "mode": "Normal",
+                        "action": "Telescope: recent files",
+                        "description": "Show recently opened files"
+                    },
+                    {
+                        "keys": "<leader>fc",
+                        "mode": "Normal",
+                        "action": "Telescope: grep word under cursor",
+                        "description": "Search for word under cursor across project"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "lsp-commands",
+            "title": "LSP Navigation & Actions",
+            "description": "Language Server Protocol commands for code intelligence",
+            "category": "lsp",
+            "tags": [
+                "lsp",
+                "navigation",
+                "definition",
+                "hover",
+                "rename"
+            ],
+            "keywords": [
+                "goto",
+                "definition",
+                "hover",
+                "rename",
+                "references"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "gd",
+                        "mode": "Normal",
+                        "action": "LSP: go to definition",
+                        "description": "Jump to symbol definition"
+                    },
+                    {
+                        "keys": "gD",
+                        "mode": "Normal",
+                        "action": "LSP: go to declaration",
+                        "description": "Jump to symbol declaration"
+                    },
+                    {
+                        "keys": "K",
+                        "mode": "Normal",
+                        "action": "LSP: hover docs",
+                        "description": "Show documentation in floating window"
+                    },
+                    {
+                        "keys": "gi",
+                        "mode": "Normal",
+                        "action": "LSP: go to implementation",
+                        "description": "Jump to symbol implementation"
+                    },
+                    {
+                        "keys": "<leader>rn",
+                        "mode": "Normal",
+                        "action": "LSP: rename symbol",
+                        "description": "Rename symbol across project"
+                    },
+                    {
+                        "keys": "<leader>ca",
+                        "mode": "Normal",
+                        "action": "LSP: code action",
+                        "description": "Show available code actions"
+                    },
+                    {
+                        "keys": "gr",
+                        "mode": "Normal",
+                        "action": "LSP: references",
+                        "description": "Find all references to symbol"
+                    },
+                    {
+                        "keys": "<leader>f",
+                        "mode": "Normal",
+                        "action": "LSP: format buffer",
+                        "description": "Format current buffer"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "diagnostics",
+            "title": "Diagnostics & Error Navigation",
+            "description": "Navigate and manage LSP diagnostics and errors",
+            "category": "lsp",
+            "tags": [
+                "diagnostics",
+                "errors",
+                "warnings",
+                "navigation"
+            ],
+            "keywords": [
+                "diagnostics",
+                "error",
+                "warning",
+                "next",
+                "previous"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "<leader>d",
+                        "mode": "Normal",
+                        "action": "Diagnostics: open float",
+                        "description": "Show diagnostic info in floating window"
+                    },
+                    {
+                        "keys": "[d",
+                        "mode": "Normal",
+                        "action": "Diagnostics: previous",
+                        "description": "Jump to previous diagnostic"
+                    },
+                    {
+                        "keys": "]d",
+                        "mode": "Normal",
+                        "action": "Diagnostics: next",
+                        "description": "Jump to next diagnostic"
+                    },
+                    {
+                        "keys": "<leader>q",
+                        "mode": "Normal",
+                        "action": "Diagnostics: set loclist",
+                        "description": "Add diagnostics to location list"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "gitsigns",
+            "title": "Git Integration (Gitsigns)",
+            "description": "Git hunk management and blame functionality",
+            "category": "git",
+            "tags": [
+                "git",
+                "hunk",
+                "stage",
+                "blame",
+                "diff"
+            ],
+            "keywords": [
+                "git",
+                "hunk",
+                "stage",
+                "reset",
+                "blame",
+                "diff"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "]c",
+                        "mode": "Normal",
+                        "action": "Gitsigns: next hunk",
+                        "description": "Jump to next git hunk"
+                    },
+                    {
+                        "keys": "[c",
+                        "mode": "Normal",
+                        "action": "Gitsigns: prev hunk",
+                        "description": "Jump to previous git hunk"
+                    },
+                    {
+                        "keys": "<leader>hs",
+                        "mode": "Normal",
+                        "action": "Gitsigns: stage hunk",
+                        "description": "Stage current hunk"
+                    },
+                    {
+                        "keys": "<leader>hr",
+                        "mode": "Normal",
+                        "action": "Gitsigns: reset hunk",
+                        "description": "Reset current hunk"
+                    },
+                    {
+                        "keys": "<leader>hp",
+                        "mode": "Normal",
+                        "action": "Gitsigns: preview hunk",
+                        "description": "Preview hunk changes"
+                    },
+                    {
+                        "keys": "<leader>hb",
+                        "mode": "Normal",
+                        "action": "Gitsigns: blame line (full)",
+                        "description": "Show git blame for current line"
+                    },
+                    {
+                        "keys": "<leader>tb",
+                        "mode": "Normal",
+                        "action": "Gitsigns: toggle line blame",
+                        "description": "Toggle inline git blame"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "visual-mode",
+            "title": "Visual Mode Enhancements",
+            "description": "Enhanced visual mode selections and operations",
+            "category": "keymaps",
+            "tags": [
+                "visual",
+                "selection",
+                "movement",
+                "indentation"
+            ],
+            "keywords": [
+                "visual",
+                "move",
+                "indent",
+                "paste"
+            ],
+            "mode": "visual",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "J",
+                        "mode": "Visual",
+                        "action": "Move selected text down",
+                        "description": "Move visual selection down"
+                    },
+                    {
+                        "keys": "K",
+                        "mode": "Visual",
+                        "action": "Move selected text up",
+                        "description": "Move visual selection up"
+                    },
+                    {
+                        "keys": "<",
+                        "mode": "Visual",
+                        "action": "Indent left (stay in visual)",
+                        "description": "Decrease indentation and stay in visual mode"
+                    },
+                    {
+                        "keys": ">",
+                        "mode": "Visual",
+                        "action": "Indent right (stay in visual)",
+                        "description": "Increase indentation and stay in visual mode"
+                    },
+                    {
+                        "keys": "p",
+                        "mode": "Visual",
+                        "action": "Paste without yanking (keeps clipboard)",
+                        "description": "Paste over selection without replacing clipboard"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "vim-movement",
+            "title": "Basic Movement Commands",
+            "description": "Essential Vim movement commands for navigation",
+            "category": "navigation",
+            "tags": [
+                "movement",
+                "navigation",
+                "cursor"
+            ],
+            "keywords": [
+                "hjkl",
+                "word",
+                "line",
+                "jump"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "h",
+                        "mode": "Normal",
+                        "action": "Move cursor left",
+                        "description": "Move cursor one character to the left"
+                    },
+                    {
+                        "keys": "j",
+                        "mode": "Normal",
+                        "action": "Move cursor down",
+                        "description": "Move cursor one line down"
+                    },
+                    {
+                        "keys": "k",
+                        "mode": "Normal",
+                        "action": "Move cursor up",
+                        "description": "Move cursor one line up"
+                    },
+                    {
+                        "keys": "l",
+                        "mode": "Normal",
+                        "action": "Move cursor right",
+                        "description": "Move cursor one character to the right"
+                    },
+                    {
+                        "keys": "w",
+                        "mode": "Normal",
+                        "action": "Jump to next word",
+                        "description": "Move cursor to beginning of next word"
+                    },
+                    {
+                        "keys": "b",
+                        "mode": "Normal",
+                        "action": "Jump to previous word",
+                        "description": "Move cursor to beginning of previous word"
+                    },
+                    {
+                        "keys": "e",
+                        "mode": "Normal",
+                        "action": "Jump to end of word",
+                        "description": "Move cursor to end of current word"
+                    },
+                    {
+                        "keys": "0",
+                        "mode": "Normal",
+                        "action": "Jump to beginning of line",
+                        "description": "Move cursor to start of current line"
+                    },
+                    {
+                        "keys": "$",
+                        "mode": "Normal",
+                        "action": "Jump to end of line",
+                        "description": "Move cursor to end of current line"
+                    },
+                    {
+                        "keys": "gg",
+                        "mode": "Normal",
+                        "action": "Jump to first line",
+                        "description": "Move cursor to beginning of file"
+                    },
+                    {
+                        "keys": "G",
+                        "mode": "Normal",
+                        "action": "Jump to last line",
+                        "description": "Move cursor to end of file"
+                    },
+                    {
+                        "keys": "H",
+                        "mode": "Normal",
+                        "action": "Jump to top of screen",
+                        "description": "Move cursor to top line of current screen"
+                    },
+                    {
+                        "keys": "M",
+                        "mode": "Normal",
+                        "action": "Jump to middle of screen",
+                        "description": "Move cursor to middle line of current screen"
+                    },
+                    {
+                        "keys": "L",
+                        "mode": "Normal",
+                        "action": "Jump to bottom of screen",
+                        "description": "Move cursor to bottom line of current screen"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "vim-editing",
+            "title": "Text Editing Commands",
+            "description": "Core Vim commands for inserting, deleting, and changing text",
+            "category": "editing",
+            "tags": [
+                "insert",
+                "delete",
+                "change",
+                "text"
+            ],
+            "keywords": [
+                "insert",
+                "delete",
+                "change",
+                "yank",
+                "paste"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "i",
+                        "mode": "Normal",
+                        "action": "Insert before cursor",
+                        "description": "Enter insert mode at cursor position"
+                    },
+                    {
+                        "keys": "I",
+                        "mode": "Normal",
+                        "action": "Insert at beginning of line",
+                        "description": "Enter insert mode at start of line"
+                    },
+                    {
+                        "keys": "a",
+                        "mode": "Normal",
+                        "action": "Insert after cursor",
+                        "description": "Enter insert mode after cursor"
+                    },
+                    {
+                        "keys": "A",
+                        "mode": "Normal",
+                        "action": "Insert at end of line",
+                        "description": "Enter insert mode at end of line"
+                    },
+                    {
+                        "keys": "o",
+                        "mode": "Normal",
+                        "action": "Insert new line below",
+                        "description": "Create new line below and enter insert mode"
+                    },
+                    {
+                        "keys": "O",
+                        "mode": "Normal",
+                        "action": "Insert new line above",
+                        "description": "Create new line above and enter insert mode"
+                    },
+                    {
+                        "keys": "x",
+                        "mode": "Normal",
+                        "action": "Delete character",
+                        "description": "Delete character under cursor"
+                    },
+                    {
+                        "keys": "X",
+                        "mode": "Normal",
+                        "action": "Delete character before",
+                        "description": "Delete character before cursor"
+                    },
+                    {
+                        "keys": "dd",
+                        "mode": "Normal",
+                        "action": "Delete line",
+                        "description": "Delete entire current line"
+                    },
+                    {
+                        "keys": "D",
+                        "mode": "Normal",
+                        "action": "Delete to end of line",
+                        "description": "Delete from cursor to end of line"
+                    },
+                    {
+                        "keys": "yy",
+                        "mode": "Normal",
+                        "action": "Yank (copy) line",
+                        "description": "Copy entire current line"
+                    },
+                    {
+                        "keys": "Y",
+                        "mode": "Normal",
+                        "action": "Yank to end of line",
+                        "description": "Copy from cursor to end of line"
+                    },
+                    {
+                        "keys": "p",
+                        "mode": "Normal",
+                        "action": "Paste after cursor",
+                        "description": "Paste copied/cut content after cursor"
+                    },
+                    {
+                        "keys": "P",
+                        "mode": "Normal",
+                        "action": "Paste before cursor",
+                        "description": "Paste copied/cut content before cursor"
+                    },
+                    {
+                        "keys": "u",
+                        "mode": "Normal",
+                        "action": "Undo",
+                        "description": "Undo last change"
+                    },
+                    {
+                        "keys": "Ctrl+r",
+                        "mode": "Normal",
+                        "action": "Redo",
+                        "description": "Redo undone change"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "vim-visual-selection",
+            "title": "Visual Mode & Text Selection",
+            "description": "Visual mode commands for selecting and manipulating text blocks",
+            "category": "visual",
+            "tags": [
+                "visual",
+                "selection",
+                "block",
+                "range"
+            ],
+            "keywords": [
+                "visual",
+                "select",
+                "block",
+                "line",
+                "character"
+            ],
+            "mode": "visual",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "v",
+                        "mode": "Normal",
+                        "action": "Enter visual mode",
+                        "description": "Start character-wise visual selection"
+                    },
+                    {
+                        "keys": "V",
+                        "mode": "Normal",
+                        "action": "Enter line visual mode",
+                        "description": "Start line-wise visual selection"
+                    },
+                    {
+                        "keys": "Ctrl+v",
+                        "mode": "Normal",
+                        "action": "Enter visual block mode",
+                        "description": "Start block-wise visual selection"
+                    },
+                    {
+                        "keys": "gv",
+                        "mode": "Normal",
+                        "action": "Reselect last visual",
+                        "description": "Reselect the last visual selection"
+                    },
+                    {
+                        "keys": "o",
+                        "mode": "Visual",
+                        "action": "Move to other end",
+                        "description": "Move cursor to other end of selection"
+                    },
+                    {
+                        "keys": "aw",
+                        "mode": "Visual",
+                        "action": "Select a word",
+                        "description": "Select around word (including spaces)"
+                    },
+                    {
+                        "keys": "iw",
+                        "mode": "Visual",
+                        "action": "Select inner word",
+                        "description": "Select inner word (excluding spaces)"
+                    },
+                    {
+                        "keys": "ap",
+                        "mode": "Visual",
+                        "action": "Select a paragraph",
+                        "description": "Select around paragraph"
+                    },
+                    {
+                        "keys": "ip",
+                        "mode": "Visual",
+                        "action": "Select inner paragraph",
+                        "description": "Select inner paragraph"
+                    },
+                    {
+                        "keys": "a)",
+                        "mode": "Visual",
+                        "action": "Select around parentheses",
+                        "description": "Select text including parentheses"
+                    },
+                    {
+                        "keys": "i)",
+                        "mode": "Visual",
+                        "action": "Select inside parentheses",
+                        "description": "Select text inside parentheses"
+                    },
+                    {
+                        "keys": "a}",
+                        "mode": "Visual",
+                        "action": "Select around braces",
+                        "description": "Select text including braces"
+                    },
+                    {
+                        "keys": "i}",
+                        "mode": "Visual",
+                        "action": "Select inside braces",
+                        "description": "Select text inside braces"
+                    },
+                    {
+                        "keys": "a\"",
+                        "mode": "Visual",
+                        "action": "Select around quotes",
+                        "description": "Select text including double quotes"
+                    },
+                    {
+                        "keys": "i\"",
+                        "mode": "Visual",
+                        "action": "Select inside quotes",
+                        "description": "Select text inside double quotes"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "vim-multiline-editing",
+            "title": "Multiline & Block Editing",
+            "description": "Advanced multiline editing and block manipulation commands",
+            "category": "multiline",
+            "tags": [
+                "multiline",
+                "block",
+                "column",
+                "insert",
+                "change"
+            ],
+            "keywords": [
+                "block",
+                "column",
+                "multiline",
+                "insert",
+                "visual"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "Ctrl+v → I",
+                        "mode": "Visual Block",
+                        "action": "Insert at start of block",
+                        "description": "Insert text at beginning of each line in block"
+                    },
+                    {
+                        "keys": "Ctrl+v → A",
+                        "mode": "Visual Block",
+                        "action": "Insert at end of block",
+                        "description": "Insert text at end of each line in block"
+                    },
+                    {
+                        "keys": "Ctrl+v → c",
+                        "mode": "Visual Block",
+                        "action": "Change block",
+                        "description": "Replace selected block with new text"
+                    },
+                    {
+                        "keys": "Ctrl+v → r",
+                        "mode": "Visual Block",
+                        "action": "Replace characters in block",
+                        "description": "Replace each character in block with one character"
+                    },
+                    {
+                        "keys": "Ctrl+v → d",
+                        "mode": "Visual Block",
+                        "action": "Delete block",
+                        "description": "Delete the selected block"
+                    },
+                    {
+                        "keys": "Ctrl+v → y",
+                        "mode": "Visual Block",
+                        "action": "Yank block",
+                        "description": "Copy the selected block"
+                    },
+                    {
+                        "keys": "Ctrl+v → p",
+                        "mode": "Visual Block",
+                        "action": "Paste block",
+                        "description": "Paste block after selection"
+                    },
+                    {
+                        "keys": ".",
+                        "mode": "Normal",
+                        "action": "Repeat last command",
+                        "description": "Repeat the last editing command"
+                    },
+                    {
+                        "keys": "qa",
+                        "mode": "Normal",
+                        "action": "Start recording macro 'a'",
+                        "description": "Begin recording commands into macro register 'a'"
+                    },
+                    {
+                        "keys": "q",
+                        "mode": "Normal",
+                        "action": "Stop recording macro",
+                        "description": "Stop recording current macro"
+                    },
+                    {
+                        "keys": "@a",
+                        "mode": "Normal",
+                        "action": "Play macro 'a'",
+                        "description": "Execute macro stored in register 'a'"
+                    },
+                    {
+                        "keys": "@@",
+                        "mode": "Normal",
+                        "action": "Repeat last macro",
+                        "description": "Execute the last used macro again"
+                    },
+                    {
+                        "keys": "5dd",
+                        "mode": "Normal",
+                        "action": "Delete 5 lines",
+                        "description": "Delete current line and 4 lines below"
+                    },
+                    {
+                        "keys": "3yy",
+                        "mode": "Normal",
+                        "action": "Yank 3 lines",
+                        "description": "Copy current line and 2 lines below"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "vim-search-replace",
+            "title": "Search & Replace Operations",
+            "description": "Powerful search, replace, and pattern matching commands",
+            "category": "search-replace",
+            "tags": [
+                "search",
+                "replace",
+                "pattern",
+                "regex",
+                "find"
+            ],
+            "keywords": [
+                "search",
+                "replace",
+                "substitute",
+                "pattern",
+                "regex"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "/pattern",
+                        "mode": "Normal",
+                        "action": "Search forward",
+                        "description": "Search for pattern forward in file"
+                    },
+                    {
+                        "keys": "?pattern",
+                        "mode": "Normal",
+                        "action": "Search backward",
+                        "description": "Search for pattern backward in file"
+                    },
+                    {
+                        "keys": "n",
+                        "mode": "Normal",
+                        "action": "Next search result",
+                        "description": "Jump to next search match"
+                    },
+                    {
+                        "keys": "N",
+                        "mode": "Normal",
+                        "action": "Previous search result",
+                        "description": "Jump to previous search match"
+                    },
+                    {
+                        "keys": "*",
+                        "mode": "Normal",
+                        "action": "Search word under cursor",
+                        "description": "Search forward for word under cursor"
+                    },
+                    {
+                        "keys": "#",
+                        "mode": "Normal",
+                        "action": "Search word backward",
+                        "description": "Search backward for word under cursor"
+                    },
+                    {
+                        "keys": ":s/old/new/",
+                        "mode": "Command",
+                        "action": "Replace in line",
+                        "description": "Replace first occurrence in current line"
+                    },
+                    {
+                        "keys": ":s/old/new/g",
+                        "mode": "Command",
+                        "action": "Replace all in line",
+                        "description": "Replace all occurrences in current line"
+                    },
+                    {
+                        "keys": ":%s/old/new/g",
+                        "mode": "Command",
+                        "action": "Replace all in file",
+                        "description": "Replace all occurrences in entire file"
+                    },
+                    {
+                        "keys": ":%s/old/new/gc",
+                        "mode": "Command",
+                        "action": "Replace with confirmation",
+                        "description": "Replace all with confirmation for each"
+                    },
+                    {
+                        "keys": ":g/pattern/d",
+                        "mode": "Command",
+                        "action": "Delete lines matching pattern",
+                        "description": "Delete all lines containing pattern"
+                    },
+                    {
+                        "keys": ":v/pattern/d",
+                        "mode": "Command",
+                        "action": "Delete lines not matching",
+                        "description": "Delete all lines NOT containing pattern"
+                    }
+                ]
+            },
+            "priority": "high"
+        },
+        {
+            "id": "vim-advanced-editing",
+            "title": "Advanced Text Operations",
+            "description": "Advanced text manipulation and formatting commands",
+            "category": "editing",
+            "tags": [
+                "advanced",
+                "format",
+                "case",
+                "join",
+                "indent"
+            ],
+            "keywords": [
+                "case",
+                "join",
+                "indent",
+                "format",
+                "sort"
+            ],
+            "mode": "normal",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": "J",
+                        "mode": "Normal",
+                        "action": "Join lines",
+                        "description": "Join current line with next line"
+                    },
+                    {
+                        "keys": "gJ",
+                        "mode": "Normal",
+                        "action": "Join without space",
+                        "description": "Join lines without inserting space"
+                    },
+                    {
+                        "keys": ">>",
+                        "mode": "Normal",
+                        "action": "Indent line right",
+                        "description": "Increase indentation of current line"
+                    },
+                    {
+                        "keys": "<<",
+                        "mode": "Normal",
+                        "action": "Indent line left",
+                        "description": "Decrease indentation of current line"
+                    },
+                    {
+                        "keys": "==",
+                        "mode": "Normal",
+                        "action": "Auto-indent line",
+                        "description": "Auto-indent current line"
+                    },
+                    {
+                        "keys": "gg=G",
+                        "mode": "Normal",
+                        "action": "Auto-indent entire file",
+                        "description": "Auto-indent from top to bottom of file"
+                    },
+                    {
+                        "keys": "gU",
+                        "mode": "Visual",
+                        "action": "Convert to uppercase",
+                        "description": "Convert selected text to uppercase"
+                    },
+                    {
+                        "keys": "gu",
+                        "mode": "Visual",
+                        "action": "Convert to lowercase",
+                        "description": "Convert selected text to lowercase"
+                    },
+                    {
+                        "keys": "g~",
+                        "mode": "Visual",
+                        "action": "Toggle case",
+                        "description": "Toggle case of selected text"
+                    },
+                    {
+                        "keys": ":sort",
+                        "mode": "Command",
+                        "action": "Sort lines",
+                        "description": "Sort selected lines alphabetically"
+                    },
+                    {
+                        "keys": ":sort!",
+                        "mode": "Command",
+                        "action": "Sort lines reverse",
+                        "description": "Sort selected lines in reverse order"
+                    },
+                    {
+                        "keys": "gq",
+                        "mode": "Visual",
+                        "action": "Format text",
+                        "description": "Format/wrap selected text"
+                    }
+                ]
+            },
+            "priority": "medium"
+        },
+        {
+            "id": "vim-file-operations",
+            "title": "File & Buffer Operations",
+            "description": "Commands for working with files, buffers, and windows",
+            "category": "navigation",
+            "tags": [
+                "file",
+                "buffer",
+                "window",
+                "save",
+                "open"
+            ],
+            "keywords": [
+                "file",
+                "save",
+                "open",
+                "buffer",
+                "window",
+                "split"
+            ],
+            "mode": "command",
+            "content": {
+                "keybindings": [
+                    {
+                        "keys": ":w",
+                        "mode": "Command",
+                        "action": "Save file",
+                        "description": "Write (save) current file"
+                    },
+                    {
+                        "keys": ":w filename",
+                        "mode": "Command",
+                        "action": "Save as",
+                        "description": "Save file with new name"
+                    },
+                    {
+                        "keys": ":wq",
+                        "mode": "Command",
+                        "action": "Save and quit",
+                        "description": "Write file and quit Vim"
+                    },
+                    {
+                        "keys": ":q",
+                        "mode": "Command",
+                        "action": "Quit",
+                        "description": "Quit Vim (fails if unsaved changes)"
+                    },
+                    {
+                        "keys": ":q!",
+                        "mode": "Command",
+                        "action": "Quit without saving",
+                        "description": "Force quit without saving changes"
+                    },
+                    {
+                        "keys": ":e filename",
+                        "mode": "Command",
+                        "action": "Open file",
+                        "description": "Edit (open) a file"
+                    },
+                    {
+                        "keys": ":sp",
+                        "mode": "Command",
+                        "action": "Split horizontally",
+                        "description": "Split window horizontally"
+                    },
+                    {
+                        "keys": ":vsp",
+                        "mode": "Command",
+                        "action": "Split vertically",
+                        "description": "Split window vertically"
+                    },
+                    {
+                        "keys": "Ctrl+w h",
+                        "mode": "Normal",
+                        "action": "Move to left window",
+                        "description": "Move cursor to left window"
+                    },
+                    {
+                        "keys": "Ctrl+w j",
+                        "mode": "Normal",
+                        "action": "Move to bottom window",
+                        "description": "Move cursor to bottom window"
+                    },
+                    {
+                        "keys": "Ctrl+w k",
+                        "mode": "Normal",
+                        "action": "Move to top window",
+                        "description": "Move cursor to top window"
+                    },
+                    {
+                        "keys": "Ctrl+w l",
+                        "mode": "Normal",
+                        "action": "Move to right window",
+                        "description": "Move cursor to right window"
+                    },
+                    {
+                        "keys": "Ctrl+w q",
+                        "mode": "Normal",
+                        "action": "Close window",
+                        "description": "Close current window"
+                    }
+                ]
+            },
+            "priority": "medium"
+        }
+    ],
+    "notes": [
+        "Leader = <Space>. Example: <Space>ff runs Telescope find_files.",
+        "Use :Mason to install LSP servers. In lspconfig ≥0.2, tsserver is renamed to ts_ls.",
+        "File explorer: <Space>e. Fuzzy finder: <Space>f?. Buffers: Shift+h/l.",
+        "Diagnostics in a floating window: <Space>d; jump with [d and ]d.",
+        "Vim Modes: Normal (default), Insert (i), Visual (v), Visual Line (V), Visual Block (Ctrl+v).",
+        "Multiline editing: Use Ctrl+v to select block, then I/A to insert at start/end of each line.",
+        "Macros: qa to record, q to stop, @a to replay. Use @@ to repeat last macro.",
+        "Text objects: iw (inner word), aw (around word), i\" (inside quotes), a) (around parentheses).",
+        "Search & Replace: :%s/old/new/g replaces all in file, :s/old/new/g replaces all in line.",
+        "Visual Block: Select column with Ctrl+v, then use I, A, c, r, d for block operations."
+    ]
+}

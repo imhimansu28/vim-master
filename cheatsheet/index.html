@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neovim Cheatsheet</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <!-- Alpine.js - Local copy for offline usage -->
+    <script defer src="alpine.min.js"></script>
+</head>
+
+<body x-data="cheatsheetApp()" x-init="init()">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Neovim Cheatsheet</h1>
+            <p><strong>Leader:</strong> <code>&lt;Space&gt;</code> | <strong>Local Leader:</strong>
+                <code>&lt;Space&gt;</code>
+            </p>
+        </div>
+    </header>
+
+    <!-- Search and Filter -->
+    <div class="controls">
+        <div class="container">
+            <div class="search-section">
+                <input type="text" placeholder="Search keybindings, settings..." x-model="searchQuery"
+                    class="search-input">
+                <select x-model="selectedCategory" class="category-filter">
+                    <option value="">All Categories</option>
+                    <template x-for="category in cheatsheet.categories" :key="category.id">
+                        <option :value="category.id" x-text="category.icon + ' ' + category.name"></option>
+                    </template>
+                </select>
+                <button @click="clearFilters()" class="clear-btn" x-show="searchQuery || selectedCategory">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div x-show="loading" class="loading">
+        <div class="container">
+            <p>Loading cheatsheet...</p>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div x-show="error" class="error">
+        <div class="container">
+            <p x-text="'Error: ' + error"></p>
+            <button @click="init()">Retry</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main x-show="!loading && !error">
+        <div class="container">
+            <!-- Category Tables -->
+            <template x-for="category in cheatsheet.categories" :key="category.id">
+                <section x-show="!selectedCategory || selectedCategory === category.id" class="category-section">
+                    <h2 class="category-title">
+                        <span x-text="category.icon"></span>
+                        <span x-text="category.name"></span>
+                    </h2>
+
+                    <!-- Settings Table -->
+                    <template x-if="hasSettingsInCategory(category.id)">
+                        <div class="table-wrapper">
+                            <table class="cheatsheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Setting</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="item in getSettingsForCategory(category.id)" :key="item.id">
+                                        <template x-for="setting in item.content.settings" :key="setting.setting">
+                                            <tr x-show="matchesSearch(item, setting)">
+                                                <td>
+                                                    <code x-text="setting.setting"
+                                                        @click="copyToClipboard(setting.setting, $el)"></code>
+                                                </td>
+                                                <td>
+                                                    <code x-text="setting.value" class="value"
+                                                        @click="copyToClipboard(setting.value, $el)"></code>
+                                                </td>
+                                                <td x-text="setting.description"></td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+
+                    <!-- Keybindings Table -->
+                    <template x-if="hasKeybindingsInCategory(category.id)">
+                        <div class="table-wrapper">
+                            <table class="cheatsheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mode</th>
+                                        <th>Keys</th>
+                                        <th>Action</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="item in getKeybindingsForCategory(category.id)" :key="item.id">
+                                        <template x-for="binding in item.content.keybindings" :key="binding.keys">
+                                            <tr x-show="matchesSearch(item, binding)">
+                                                <td>
+                                                    <span class="mode-tag" x-text="binding.mode"></span>
+                                                </td>
+                                                <td>
+                                                    <code x-text="binding.keys"
+                                                        @click="copyToClipboard(binding.keys, $el)"></code>
+                                                </td>
+                                                <td x-text="binding.action"></td>
+                                                <td x-text="binding.description"></td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </section>
+            </template>
+
+            <!-- Notes Section -->
+            <section class="notes-section" x-show="cheatsheet.notes?.length > 0">
+                <h2>📝 Notes</h2>
+                <ul class="notes-list">
+                    <template x-for="note in cheatsheet.notes" :key="note">
+                        <li x-text="note"></li>
+                    </template>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                Neovim Cheatsheet |
+                <span x-text="'Last updated: ' + (cheatsheet.metadata?.updated_at || 'Unknown')"></span> |
+                <button @click="scrollToTop()" class="scroll-top-btn">↑ Top</button>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

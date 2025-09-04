@@ -361,6 +361,9 @@ class NeovimMastery {
         // Reset practice state
         this.practiceState = 'preparation';
 
+        // Reset modal to single-column layout initially
+        modal.classList.remove('editor-mode', 'editor-active');
+
         const criteriaHtml = challenge.acceptance_criteria.map(criteria =>
             `<li class="modal-criteria-item"><span class="modal-criteria-icon">✓</span> ${criteria}</li>`
         ).join('');
@@ -421,7 +424,6 @@ class NeovimMastery {
         // Ensure editor section is hidden initially
         const editorSection = document.getElementById('modal-editor-section');
         editorSection.style.display = 'none';
-        modal.classList.remove('editor-active');
 
         // Ensure modal body is visible and properly styled
         modalBody.style.display = 'block';
@@ -447,11 +449,13 @@ class NeovimMastery {
         const editorSection = document.getElementById('modal-editor-section');
 
         modal.classList.add('hidden');
-        modal.classList.remove('editor-active');
+        modal.classList.remove('editor-active', 'editor-mode');
         modal.setAttribute('aria-hidden', 'true');
 
         // Hide editor section and clean up
-        editorSection.style.display = 'none';
+        if (editorSection) {
+            editorSection.style.display = 'none';
+        }
 
         // Clean up editor instance
         if (this.editor) {
@@ -462,6 +466,7 @@ class NeovimMastery {
         // Reset current challenge and session
         this.currentChallenge = null;
         this.editorSession = null;
+        this.practiceState = 'preparation';
     }
 
     toggleChallengeCompletion() {
@@ -1026,7 +1031,8 @@ class NeovimMastery {
 
         const editorSection = document.getElementById('modal-editor-section');
         const practiceButton = document.getElementById('practice-challenge');
-        const modalOverlay = document.getElementById('challenge-modal');
+        const modal = document.getElementById('challenge-modal');
+        const modalBody = document.getElementById('modal-body');
 
         // Transition to Phase 2: Practice Session
         this.practiceState = 'active';
@@ -1034,19 +1040,18 @@ class NeovimMastery {
         // Update phase indicators
         this.updatePhaseIndicators();
 
-        // Show editor section with transition
-        editorSection.style.display = 'block';
-        modalOverlay.classList.add('editor-active');
+        // Switch to two-column layout
+        modal.classList.add('editor-mode', 'editor-active');
+
+        // Restructure modal content for two-column layout
+        this.setupTwoColumnLayout();
 
         // Update button to show practice is active
         practiceButton.textContent = 'End Practice Session';
         practiceButton.classList.add('button-active');
 
-        // Hide preparation details during practice
-        const practiceDetails = document.querySelector('.practice-details');
-        if (practiceDetails) {
-            practiceDetails.style.display = 'none';
-        }
+        // Show editor section
+        editorSection.style.display = 'flex';
 
         // Initialize CodeMirror editor
         this.initializeEditor();
@@ -1070,8 +1075,38 @@ class NeovimMastery {
         }, 100);
     }
 
+    setupTwoColumnLayout() {
+        const modalBody = document.getElementById('modal-body');
+        const editorSection = document.getElementById('modal-editor-section');
+
+        // Get current content
+        const currentContent = modalBody.innerHTML;
+
+        // Create two-column structure
+        modalBody.innerHTML = `
+            <div class="modal-content-left">
+                ${currentContent}
+            </div>
+            <div class="modal-content-right">
+                ${editorSection.outerHTML}
+            </div>
+        `;
+
+        // Update the editor section reference
+        const newEditorSection = modalBody.querySelector('.modal-content-right .modal-editor-section');
+        if (newEditorSection) {
+            newEditorSection.id = 'modal-editor-section';
+        }
+    }
+
     initializeEditor() {
-        const textarea = document.getElementById('challenge-editor');
+        // Find the textarea in the new layout
+        const textarea = document.querySelector('.modal-content-right #challenge-editor');
+
+        if (!textarea) {
+            console.error('Editor textarea not found in new layout');
+            return;
+        }
 
         if (this.editor) {
             this.editor.toTextArea();
@@ -1326,7 +1361,7 @@ Happy practicing!`;
     }
 
     updateModeIndicator(mode = 'NORMAL') {
-        const indicator = document.getElementById('mode-indicator');
+        const indicator = document.querySelector('.modal-content-right #mode-indicator') || document.getElementById('mode-indicator');
         if (indicator) {
             indicator.textContent = mode.toUpperCase();
             indicator.className = `mode-indicator mode-${mode.toLowerCase()}`;
@@ -1337,14 +1372,14 @@ Happy practicing!`;
         if (!this.editor) return;
 
         const cursor = this.editor.getCursor();
-        const indicator = document.getElementById('position-indicator');
+        const indicator = document.querySelector('.modal-content-right #position-indicator') || document.getElementById('position-indicator');
         if (indicator) {
             indicator.textContent = `${cursor.line + 1}:${cursor.ch + 1}`;
         }
     }
 
     updateProgressIndicator(message, type = 'info') {
-        const indicator = document.getElementById('progress-indicator');
+        const indicator = document.querySelector('.modal-content-right #progress-indicator') || document.getElementById('progress-indicator');
         if (indicator) {
             indicator.textContent = message;
             indicator.className = `progress-indicator ${type}`;
@@ -1545,23 +1580,19 @@ Happy practicing!`;
     }
 
     endPracticeSession() {
-        const editorSection = document.getElementById('modal-editor-section');
         const practiceButton = document.getElementById('practice-challenge');
-        const modalOverlay = document.getElementById('challenge-modal');
-        const practiceDetails = document.querySelector('.practice-details');
+        const modal = document.getElementById('challenge-modal');
+        const modalBody = document.getElementById('modal-body');
 
         // Return to Phase 1: Review
         this.practiceState = 'preparation';
         this.updatePhaseIndicators();
 
-        // Hide editor section
-        editorSection.style.display = 'none';
-        modalOverlay.classList.remove('editor-active');
+        // Switch back to single-column layout
+        modal.classList.remove('editor-mode', 'editor-active');
 
-        // Show preparation details again
-        if (practiceDetails) {
-            practiceDetails.style.display = 'block';
-        }
+        // Restore original single-column content
+        this.restoreSingleColumnLayout();
 
         // Reset button
         practiceButton.textContent = 'Begin Practice Session';
@@ -1575,6 +1606,22 @@ Happy practicing!`;
 
         // Reset session
         this.editorSession = null;
+    }
+
+    restoreSingleColumnLayout() {
+        const modalBody = document.getElementById('modal-body');
+        const leftContent = modalBody.querySelector('.modal-content-left');
+
+        if (leftContent) {
+            // Restore the original single-column content
+            modalBody.innerHTML = leftContent.innerHTML;
+        }
+
+        // Ensure the editor section is back in its original position and hidden
+        const editorSection = document.getElementById('modal-editor-section');
+        if (editorSection) {
+            editorSection.style.display = 'none';
+        }
     }
 }
 
